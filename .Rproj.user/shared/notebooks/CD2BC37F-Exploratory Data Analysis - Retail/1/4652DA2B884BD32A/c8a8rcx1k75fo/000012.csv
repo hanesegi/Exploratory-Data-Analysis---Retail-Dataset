@@ -1,0 +1,4 @@
+"0","dfretail <- read.csv(""data_input/retail.csv"")
+head(dfretail)
+"
+"0",""

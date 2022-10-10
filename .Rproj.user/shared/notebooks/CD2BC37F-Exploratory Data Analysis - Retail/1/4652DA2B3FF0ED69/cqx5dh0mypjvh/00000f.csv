@@ -1,0 +1,6 @@
+"0","dfretail %>% 
+  summarize(avg_Sales = round(mean(Sales),2))
+"
+"2","Error in summarize(., avg_Sales = round(mean(Sales), 2)) : 
+  could not find function ""summarize""
+"

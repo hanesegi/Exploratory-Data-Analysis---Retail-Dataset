@@ -1,0 +1,111 @@
+---
+title: "Exploratory Data Analysis - Retail Dataset"
+author: "yohanesegipratama"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Library yang dibutuhkan
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+library(magrittr)
+# About Dataset
+
+Dataset ini berisi
+
+
+
+  
+```{r import photo}
+knitr::include_graphics("assets/retail.jpg")
+```
+
+# Load Data
+```{r}
+dfretail <- read.csv("data_input/retail.csv")
+head(dfretail)
+
+```
+
+ID Baris            => ID unik untuk setiap baris.
+ID Pesanan          => ID Pesanan Unik untuk setiap Pelanggan.
+Tanggal Pemesanan   => Tanggal Pemesanan produk.
+Tanggal Pengiriman  => Tanggal Pengiriman Produk.
+Mode Kapal          => Mode Pengiriman yang ditentukan oleh Pelanggan.
+ID Pelanggan        => ID unik untuk mengidentifikasi setiap Pelanggan.
+Nama Pelanggan      => Nama Pelanggan.
+Segmen              => Segmen tempat Pelanggan berada.
+Negara              => Negara tempat tinggal Pelanggan.
+Kota                => Kota tempat tinggal Pelanggan.
+Negara              => Negara tempat tinggal Pelanggan.
+Kode Pos            => Kode Pos setiap Pelanggan.
+Wilayah             => Wilayah tempat Pelanggan berada.
+ID Produk           => ID Unik Produk.
+Kategori            => Kategori produk yang dipesan.
+Sub-Category        => Sub-Category produk yang dipesan.
+Nama Produk         => Nama
+Penjualan           => Penjualan Produk.
+Kuantitas           => Kuantitas Produk.
+Diskon              => Diskon yang diberikan.
+Untung              => Untung/Rugi yang terjadi.
+
+
+# Data Preparation
+Seperti biasanya, saya akan mencoba membersihkan dataset jika diperlukan, sehingga akan lebih jelas pendekatan apa yang harus saya ambil. Pertama mari kita lihat beberapa informasi dasar tentang data.
+
+
+
+```{r}
+str(dfretail)
+```
+
+
+##Check missing Value
+
+```{r}
+colSums(is.na(dfretail))
+```
+##check duplikat data
+```{r}
+sum(duplicated(dfretail))
+```
+## Formatting tipe data
+
+```{r}
+# format ke dalam bentuk datetime
+dfretail$Order.Date<- as.Date(dfretail$Order.Date, "%m/%d/%y")
+dfretail$Ship.Date <- as.Date(dfretail$Ship.Date, "%m/%d/%y")
+str(dfretail)
+```
+
+```{r}
+# format ke dalam bentuk karakter
+dfretail$Row.ID <- as.character(dfretail$Row.ID)
+str(dfretail)
+```
+
+# Exploratory Data Analysis
+```{r}
+detach_package("dplyr", TRUE)
+```
+
+```{r}
+
+dfretail %>% 
+  summarize(avg_Sales = round(mean(Sales),2))
+```
+
+
+detach("package:plyr", unload=TRUE) 
+```{r}
+category <- dfretail %>%
+    group_by(`Category`, `Sub-Category`) %>%
+    summarize(count=n())
+```
+

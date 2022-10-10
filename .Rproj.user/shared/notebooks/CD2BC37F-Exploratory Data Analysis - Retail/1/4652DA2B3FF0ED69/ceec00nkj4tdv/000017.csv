@@ -1,0 +1,6 @@
+"0","category <- dfretail %>%
+    group_by(`Category`, `Sub-Category`) %>%
+    summarize(count=n())
+"
+"2","Error in summarize(., count = n()) : could not find function ""summarize""
+"

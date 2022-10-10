@@ -1,0 +1,6 @@
+"0","
+detach_package(""dplyr"", TRUE)
+"
+"2","Error in detach_package(""dplyr"", TRUE) : 
+  could not find function ""detach_package""
+"

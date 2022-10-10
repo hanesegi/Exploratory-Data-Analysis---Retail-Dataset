@@ -1,0 +1,11 @@
+"0","
+cat('Total of rows:', nrow(dfretail))
+"
+"1","Total of rows:"
+"1"," "
+"1","9994"
+"0","cat('\nTotal of columns:', ncol(dfretail))"
+"1","
+Total of columns:"
+"1"," "
+"1","15"

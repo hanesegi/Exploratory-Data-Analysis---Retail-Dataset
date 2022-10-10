@@ -1,0 +1,958 @@
+---
+title: "Programming for Data Science: In-Class Material"
+author: "Dwi Gustin Nurdialit"
+date: "3 Oktober, 2022"
+output:
+  html_document:
+    theme: cosmo
+    highlight: tango
+    toc: true
+    toc_float:
+      collapsed: true
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+# clear-up the environment
+rm(list = ls())
+
+# chunk options
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
+  fig.align = "center",
+  comment = "#>"
+)
+```
+
+<style>
+body {
+text-align: justify}
+</style>
+
+# RStudio
+
+**R** is the programming language, **RStudio** is an IDE for using R.
+  
+```{r import photo}
+knitr::include_graphics("img/rstudio.png")
+```
+
+* **Console** : command prompt, engine utama  
+* **Source**: *R Files*: RScript, RMarkdown
+* **Environment tab**: Where we can save our R Objects
+* **Files, Plots, Help tabs**:  
+ - *Help*: to get help, use `?` followed by function name. e/g: `?class`
+
+# Basic R Programming
+
+## Introduction to R Markdown
+
+Bagian putih dari R Markdown (.Rmd) berguna untuk menulis narasi. Pada bagian ini dapat ditambahkan heading dengan menambahkan hashtag `#` sebelum kalimat. Narasi yang tidak ditambahkan `#` sebelum kalimat akan menjadi paragraf biasa.
+
+Bagian abu-abu dari Rmarkdown adalah `chunk`. Chunk berguna untuk menulis **code**. 
+
+shortcuts:
+
+- membuat chunks baru: ctrl + alt + i
+- menjalankan satu baris code: ctrl + enter
+- menjalankan satu chunk: ctrl + shift + enter
+- tanda assign: alt -
+
+
+```{r}
+
+```
+
+
+## Object
+
+Untuk pengolahan data di R, data atau sebuah value dapat disimpan/diassign ke dalam objek. Untuk assign objek dapat menggunakan `<-` dan hasilnya akan tersimpan pada environment.
+
+Shortcut: alt -
+
+```{r}
+# objek bernama "nama" berisi suatu value
+nama <- "Algoritma"
+
+# print objek nama
+nama
+```
+
+## R is Case Sensitive
+
+```{r}
+"Algoritma" == "algoritma"
+"Algoritma" == "Algoritma"
+"Algoritma" != "algoritma"
+```
+
+
+## Comment 
+
+Untuk memasukan narasi dalam chunk dapat menggunakan **comment** dengan menambahkan `#` sebelum narasi tersebut. Comment tidak dianggap sebagai codingan dalam chunk, sehingga tidak akan menimbulkan error.
+
+
+## Overwrite
+
+```{r}
+nama <- "Dwi Gustin"
+nama
+```
+
+```{r}
+kota <- "Jakarta"
+kota <- "Bandung"
+kota1 <- "Denpasar"
+kota1 <- "Bogor"
+```
+
+kota --> Bandung
+kota1 --> Bogor
+
+
+## 🏄 Dive Deeper
+
+Buatlah 3 buah object sebagai berikut:
+
+- `nama`: nama lengkap Anda
+- `pekerjaan`: pekerjaan Anda saat ini
+- `kota`: domisili Anda
+
+Gunakan komentar untuk memperjelas code yang diketikkan
+
+```{r}
+# code here
+nama <- "Dwi Gustin"
+pekerjaan <- "instructor"
+kota <- "Yogyakarta"
+```
+
+## Data Type
+
+### Character
+
+Tipe data yang berisi huruf/karakter.
+
+```{r}
+# buat data kota
+kota <- c("Bandung1", "Jakarta", "Bogor!")
+# cek tipe data
+class(kota)
+```
+
+### Numeric
+
+Tipe data berisi angka yang dapat berupa angka kontinu (ada koma/pecahan/float), maupun diskrit (bilangan bulat tanpa koma).
+
+```{r}
+umur <- c(25, 34, 27.8, 17*2)
+class(umur)
+```
+
+### Integer
+
+Tipe data berisi angka yang berupa angka diskrit (bilangan bulat tanpa koma). Umumnya dari data ID (costumer ID, transaction ID, dll). Untuk memaksa numeric menjadi integer, dapat gunakan L dibelakang angka.
+
+
+```{r}
+sepatu <- c(42L,39L,44L)
+sepatu
+class(sepatu)
+```
+
+
+```{r}
+sepatu <- c(42L, 39L, 44L)
+class(sepatu)
+```
+
+### Logical
+
+Tipe data yang hanya berisi `TRUE` = 1 atau `FALSE` = 0. Penulisan TRUE/FALSE dapat disingkat menjadi T/F.
+
+```{r}
+status <- c(TRUE, FALSE, T, F)
+class(status)
+```
+
+# 📝 Summary Day 1
+
+- R dan RStudio
+  
+  + R       : R adalah bahasa pemrogramannya
+  + RStudio : IDE; aplikasi untuk membaca (canvas)
+  
+- files:
+
+  + .Rmd :
+    - file untuk menulis R code dan narasi (markdown)
+      + Chunks
+        - Menuliskan code R
+      + Markdown
+        - menuliskan narasi
+  + .html
+    - Hypertext markup language
+    - Ouput hasil menjalankan knitting rmd
+    - Bisa dibuka melalui browser
+  + .Rproj
+    - Untuk membuka rstudio agar directory langsung ditempatnya
+    
+- Sifat-sifat code R
+
+  1. Object
+    - Untuk menyimpan suatu nilai
+    - Nama lain: variabel, feature, field (pada bahasa pemrograman lain)
+  2. Overwrite
+    - value yang diambil adalah value yang terakhir dijalankan
+  3. Case sensitive
+    - Antara kapital dengan non-capital adalah dua hal yang berbeda
+  4. Comment
+    - Untuk menuliskan narasi pada code R
+    - Menggunakan tanda pagar (#)
+    
+- Tipe Data
+  
+  1. Character
+  2. Numeric
+  3. Integer
+  4. Logical
+
+
+-----End of day 1------
+
+# Start of day 2
+
+
+
+```{r}
+mix <- c(TRUE, 12, 123L)
+class(mix)
+```
+
+misal: Id barang
+
+```{r}
+id_barang <- c("123CD", "14456", "ABCDEF", 15678)
+class(id_barang)
+```
+
+### Implicit Coercion
+
+Lalu, apa yang akan terjadi jika dalam satu vector memiliki beberapa tipe data yang berbeda seperti chunk dibawah ini?
+
+```{r}
+mix <- c("Algoritma", 2020, TRUE)
+mix
+```
+
+```{r}
+class(mix)
+```
+
+Bila Anda perhatikan setiap nilai pada vector `mix` memiliki **petik dua**, artinya nilai tersebut merupakan sebuah objek dengan tipe character. Proses perubahan paksa dari suatu vector bisa disebut sebagai **implicit coercion**. Ilustrasi terjadinya implicit coercion dapat dilihat pada gambar di bawah ini:
+
+```{r}
+knitr::include_graphics("img/data_type.png")
+```
+
+## ❓ Knowledge Check
+
+1. Dibawah ini mana pernyataan yang *salah* terkait sifat pemrograman di R ?     
+- A. [ ] Bahasa Pemrograman R bersifat case sensitive     
+- B. [ ] Tanda <- berfungsi untuk memasukkan suatu nilai kedalam sebuah objek     
+- C. [X] Tanda // diawal sebuah chunk berfungsi sebagai tanda komentar (seharusnya #)     
+- D. [ ] tanda == digunakan untuk mengecek kesamaan antar 2 buah nilai      
+
+
+2. Tipe data yang tepat untuk kolom yang berisi *nama pelanggan* adalah ?
+- A. [ ] Logical 
+- B. [ ] Integer
+- C. [X] Character
+- D. [ ] Numeric
+
+3. Tipe data dari beberapa vector dibawah ini secara berurutan adalah?
+- c(TRUE, 1L, 1/2) : numeric (1/2)
+- c("1", 12, 33.3) : chr ("1")   
+- c(1,2,3,4L)      : Numeric (1,2,3)
+ 
+ 
+Tipe data di R (diurutkan dari yang paling general ke spesifik):
+  
+  - C. Character: huruf, diapit dengan tanda kutip dua "..." ataupun kutip satu '...'
+  - A. Numeric: angka, bilangan desimal (berkoma, TIDAK diapit dengan kutip
+  - D. Integer: angka diskrit, bilangan bulat, diikuti dengan L
+  - B. Logical: TRUE (T) atau FALSE (F)
+
+Fungsi:
+- c() untuk menyimpan beberapa nilai sekaligus ke dalam sebuah vector
+- class() untuk cek tipe data sebuah object
+
+Istilah:
+- Implicit coercion: secara otomatis tipe data pada vector akan diubah menjadi 1 tipe data yang paling GENERAL
+- Explicit coercion: mengubah tipe data secara manual
+
+
+## Data Structure
+
+Struktur data merupakan bagaimana data disusun berdasarkan struktur tertentu, pada R terdapat 4 struktur data dasar yaitu vector, matrix, list, dan dataframe.
+
+### Vector
+
+Vector merupakan salah satu struktur data yang sering digunakan. vector merupakan struktur data yang hanya bisa menampung 1 tipe data saja dan hanya terdiri dari satu dimensi. untuk membuat vector dapat menggunanakan fungsi `c()`
+
+```{r}
+place <- c("Algoritma", "Indonesia", "Jakarta")
+place
+class(place)
+```
+
+### Factor
+
+factor merupkan bentuk perkembangan dari vector, yang membedakan vector dan factor adalah pada factor objek memiliki levels. 
+
+```{r}
+card <- factor(c("Blue", "Gold", "Platinum", "Gold", "Gold", "Blue", "Platinum"))
+card
+```
+Factor: kita bisa mengetahui jumlah nilai unik pada data tersebut
+
+
+### Matrix
+
+Matrix merupakan struktur data yang memiliki 2 dimensi dan hanya bisa di isi dengan 1 tipe data saja
+```{r}
+mat <- matrix(11:16, nrow = 3, ncol = 2)
+mat
+```
+
+```{r}
+mat[3,2]
+```
+
+
+### List
+
+List merupakan struktur data yang dapat menyimpan lebih dari 1 tipe data dan hanya memiliki 1 dimensi
+
+```{r}
+our_list <- list(c(TRUE, FALSE), "TRUE", c(1, 6, 12), 1L)
+our_list
+```
+
+Seperti `vector`, sebuah `list` hanya memiliki 1 dimensi; namun jika Anda ingin mengakses elemen-elemen data di dalamnya, Anda dapat menggunakan `[]`. Meskipun kita sudah menggunakan `[]`, kita masih akan mendapatkan objek dengan struktur data berupa `list`:
+
+
+Jika ingin mengakses element pada list bisa mengguanakan tanda `[]`
+```{r}
+our_list[[1]]
+```
+
+Untuk mengakses _vector_ yang ada di dalamnya, maka kita bisa menggunakan `[[]]`:
+
+```{r}
+our_list[[1]][1]
+```
+
+
+### Data Frame
+
+Data frame merupakan tipe data yang paling sering digunakan dalam pengolahan data, karena data frame dapat berisi beberapa tipe data serta memiliki 2 dimensi. Adapun cara untuk membuat sebuah data frame kita bisa menggunakan fungsi `data.frame()` seperti di bawah ini:
+
+```{r}
+daftar_buah <- data.frame(
+  buah = c("Apel", "Semangka", "Jambu"),
+  ukuran = c(22,76, 12)
+)
+
+daftar_buah
+```
+
+Ilustrasi dari rangkuman keempat struktur data yang sudah kita bahas di atas, dapat diilustrasikan seperti di bawah ini:
+
+```{r}
+knitr::include_graphics("img/structure.png")
+```
+
+
+## 🏄 Dive Deeper
+
+Buat sebuah data frame yang berisi 3 baris dengan kolom sebagai berikut:
+
+- `product_name`: nama produk di pasar swalayan (bebas/yang sering Anda beli)
+- `quantity`: jumlah pembelian masing-masing produk 
+- `harga`: harga satuan untuk masing-masing produk
+
+Simpan pada object yang bernama `data_belanjaan`
+
+```{r}
+# code here
+pasar <- data.frame(
+  product_name = c("Sabun", "Shampo", "Telur"),
+  quantity = c(12,29, 43),
+  harga = c(12000,15000,25000)
+)
+pasar
+```
+
+# Working with Data Frame
+
+## Directory
+
+untuk mengetahui lokasi directory dari lokasi Rmd bisa menggunakan fungsi `getwd()`
+
+```{r}
+getwd()
+```
+
+dan untuk mengatur lokasi dari working directory bisa menggunakan `setwd()`
+
+ctrl + shift + c : memberikan komentar
+
+```{r}
+# setwd("/Users/macbook/Documents/Data Science/00. Algoritma/1. Academy Class (R)/theia/1_P4DS")
+```
+
+
+## Read and extracting data
+
+untuk memasukkan data yang bertipe csv ke R kita bisa menggunakan fungsi `read.csv`. Pada workshop kali ini data yang digunakan adalah data *retail.csv* yang berada pada folder **data_input**
+
+fungsi -> memesan nasi_goreng
+
+nasi goreng:
+- pedes = 3
+- sayur = TRUE
+- tipe = bakso
+- telor = ceplok
+
+nasi_goreng(pedes = 3, sayur = TRUE, tipe = "bakso", telor = "ceplok")
+
+
+```{r}
+retail <- read.csv(file = "data_input/retail.csv")
+```
+
+### View()
+
+Pada umumnya ketika bekerja dengan data kita ingin melihat data bentuk data secara keseluruhan, hal tersebut dapat dilakukan dengan menggunakan fungsi View().
+
+```{r}
+# View(retail)
+```
+
+
+### Inspect data: head() and tail()
+
+Untuk melihat seluruh sebagian data yang sudah digunakan bisa menggunakan fungsi `head()` dan `tail()`. 
+`head()` berguna untuk melihat beberapa baris pertama pada data (default 6)
+```{r}
+head(retail, n = 10)
+```
+
+sedangkan `tail()` untuk melihat beberapa data terakhir.
+
+```{r}
+tail(retail, 10)
+```
+
+### str()
+
+Untuk melihat struktur data yang dimiliki dapat mengguankan fungsi `str()`
+
+```{r}
+str(retail)
+```
+```{r}
+# retail$Quantity*retail$Discount
+```
+
+
+### dim(), nrow(), ncol()
+
+mengetahui dimensi dari data bisa menggunakan fungsi dim()
+
+```{r}
+# untuk melihat dimensi data
+dim(retail)
+```
+
+untuk mengetahui jumlah baris bisa menggunakan fungsi `nrow()` sedangkan jumlah kolom bisa menggunakan `ncol()`
+```{r}
+nrow(retail)
+ncol(retail)
+```
+
+### summary
+
+dengan menggunakan fungsi summary() kita bisa melihat rangkuman dari suatu data.
+
+```{r}
+summary(retail)
+
+```
+
+
+## ❓ Knowledge Check
+
+1. Code yang tepat untuk melihat 10 baris terakhir pada data retail yaitu ?
+- [ ] head(retail, 10)
+- [ ] str(retail)
+- [ ] summary(retail,10)
+- [X] tail(retail,10)
+
+2. fungsi yang digunakan untuk menampilakan dimensi data serta tipe data setiap kolom secara sekaligus yaitu ?
+- [ ] dim() -> dimensi data (baris, kolom)
+- [ ] ncol() -> jumlah kolom
+- [ ] class() -> check tipe data
+- [X] str() -> struktur data
+
+
+## Performing simple data cleansing
+
+### Explicit Coercion
+
+Tahapan awal sebelum melakukan analisis data adalah memastikan bahwa data yang digunakan sudah bersih. Salah satu teknik data cleansing yaitu mengubah tipe data ke dalam tipe data yang tepat, atau dikenal sebagai istilah **explicit coercion**.
+
+```{r}
+# cek kembali struktur data retail
+str(retail)
+```
+
+Untuk mengubah tipe data, kita bisa menggunakan fungsi `as.___()` di mana `___` diisi dengan tipe data tujuan. Contoh:
+
+* `as.character()`
+* `as.Date()`
+* `as.integer()`
+* `as.numeric()`
+* `as.factor()`
+* dan sebagainya
+
+❓💬 **Diskusi:** Dari data `retail`, kolom manakah saja yang perlu diubah tipe datanya?
+
+- Order.Date, Ship.Date -> Date
+- Ship.Mode, Segment, Category, Sub.Category -> factor
+
+- Cara check unique value pada suatu kolom
+```{r}
+length(unique(retail$Category))
+```
+
+
+```{r}
+# explicit coercion
+retail$Ship.Mode <- as.factor(retail$Ship.Mode)
+retail$Segment <- as.factor(retail$Segment)
+retail$Category <- as.factor(retail$Category)
+retail$Sub.Category <- as.factor(retail$Sub.Category)
+
+
+# sekarang pada kolom dengan tipe data factor muncul frekuensinya 
+str(retail)
+```
+
+Parameter `format` pada `as.Date()` digunakan untuk menspesifikan format penulisan tanggal pada data, berikut format yang sering digunakan:
+
+* YEAR
+  - %Y = tahun empat digit, contoh: 2022
+  - %y = tahun dua digit, contoh: 22
+
+* MONTH
+  - %B = nama bulan, contoh: January
+  - %b = nama bulan singkatan, contoh: Jan
+  - %m = bulan dua digit, contoh: 01
+
+* DAY
+  - %A = nama hari, contoh: Monday
+  - %d = tanggal, contoh: 01 sampai 31
+
+```{r}
+retail$Order.Date <- as.Date(retail$Order.Date, format = "%m/%d/%y")
+retail$Ship.Date <- as.Date(retail$Ship.Date, format = "%m/%d/%y")
+str(retail)
+```
+
+📌 Tambahan: Kolom dengan tipe data date dapat dioperasikan satu sama lain. Misal kita ingin menghitung durasi waktu antara pemesanan (`Order.Date`) dengan pengiriman (`Ship.Date`), lalu simpan hasil perhitungan ke kolom `Duration`.
+
+Fungsi `difftime()` digunakan untuk menghitung `time1 - time2` dengan parameter:
+
+- `time1`: waktu end
+- `time2`: waktu start
+- `units`: satuan waktu hasil pengurangan
+
+```{r}
+retail$Duration <- difftime(
+  time1 = retail$Ship.Date,
+  time2 = retail$Order.Date,
+  units = "days")
+head(retail)
+```
+
+### Check Missing Value
+
+Untuk mengetahui apakah terdapat missing value pada data, kita bisa menggunakan fungsi `anyNA()`
+
+```{r}
+anyNA(retail)
+```
+
+untuk mengecek missing value pada setiap kolom dapat menggunakan fungsi `is.na()` dan `ColSums()`
+
+```{r}
+colSums(is.na(retail))
+```
+
+> Pada data retail tidak didapati missing value. Proses imputasi atau handling missing value akan dibahas pada course machine learning.
+
+
+# 📝 Summary Day 2
+
+- Tipe Data
+  + character
+  + numeric
+  + integer
+  + logical
+  + catatan: dalam suatu vector, apabila ada berbagai jenis tipe data, R akan menganggap tipe data vector tersebut dengan tipe data yang paling general dari vector tersebut (implicit coercion)
+  
+- Struktur Data: Bagaimana cara data disusun
+  + vector: 1 Dimensi, 1 tipe data
+  + list: 1 dimensi, >1 tipe data
+  + matrix: 2 Dimensi, 1 tipe data
+  + data frame: 2 Dimensi, >1 tipe data
+  
+- Working data
+  + Harus setting directory, best practice membuka RStudio melalui Rproj
+  + Workflow:
+    
+    1. Read data
+    2. Inspek data: head(), tail()
+    3. Check struktur data: str()
+    4. Check summary data: summary()
+    5. Menyesuaikan tipe data (explicit coercion): as.___
+    6. Check missing value
+    7. Check duplicated data
+    
+# Inclass Question:
+
+1. Dictionary di R
+
+- Untuk membuat dictionary di R diperlukan package tambahan yaitu `Dict`.
+- Untuk menginisiasi suatu dictionary kita dapat mendefinisikan key-value dengan contoh sebagai berikut:
+
+```{r}
+library(Dict)
+ages <- Dict$new(
+  Charlie = 40L,
+  Alice = 30L,
+  Bob = 25L,
+  .class = "integer",
+  .overwrite = TRUE
+)
+ages
+```
+
+2. Check duplicated data
+
+- Untuk check duplikat data bisa menggunakan fungsi `duplicated()`
+
+```{r}
+duplicated(retail)
+```
+- Atau menggunakan cara subsetting untuk melihat data yang duplikat
+```{r}
+retail[duplicated(retail)]
+```
+
+----End of Day 2---
+
+# Start of day 3
+
+### subsetting
+
+untuk melakukan subsetting pada R anda akan membutuhkan [,]. Ilustrasi penggunaan [,] dapat dilihat seperti gambar dibawah
+
+
+```{r}
+knitr::include_graphics("img/subset.png")
+```
+
+❓Dari data retail, ambil data dengan index 10 hingga 20
+
+```{r}
+retail[10:20,]
+```
+
+❓Dari data retail ambil kolom kolom Ship.Date dan Ship.Mode
+
+```{r}
+retail[ , c("Ship.Date", "Ship.Mode")]
+
+# subset kolom berdasarkan index kolom
+retail[ , c(3,4)]
+```
+
+#### Conditional Subsetting
+
+Kita dapat menggunakan operator logikal berikut untuk melakukan **filter baris** berdasarkan kondisi tertentu.
+
+**Logical Operator:** 
+
+* `>` lebih dari
+* `<` kurang dari
+* `>=` lebih dari sama dengan
+* `<=` kurang dari sama dengan
+* `==` mengecek kesamaan 2 nilai
+* `!=` tidak sama dengan
+* `&` dan
+* `|` atau
+* `%in%` include
+
+
+❓ Dari data `retail` ambil data yang memiliki `Profit` lebih dari 4000, dan ambil kolom Product.Name dan Profit
+
+```{r}
+retail[retail$Profit > 4000 , c("Product.Name", "Profit")]
+```
+
+❓ Berapa banyak data yang ber- Segment Corporate dan memiliki Profit diatas 500 ?
+
+```{r}
+retail[retail$Segment == "Corporate" & retail$Profit > 500,]
+```
+
+
+## 🏄 Dive Deeper
+
+Sebagai seorang analis yang hendak menelusuri performa penjualan suatu perusahaan. Jawablah beberapa pertanyaan berikut
+
+1. Berdasarkan data `retail` berapa banyak `Category` *Furniture*, yang dikirim (`Ship.Mode`) dengan tipe *Standard Class* ?
+
+```{r}
+# your code
+nrow(retail[ retail$Category == "Furniture" & retail$Ship.Mode == "Standard Class", ])
+```
+
+
+2. Ada berapa banyak transaksi dari `Category` Furniture yang mengakibatkan kerugian (`Profit` kurang dari nol)?
+
+```{r}
+nrow(retail[retail$Category == "Furniture" & retail$Profit < 0 , ])
+```
+
+3. Ada berapa banyak transaksi dari pengiriman yang menggunakan "Second Class" dan "Standard Class"
+
+```{r}
+nrow(retail[retail$Ship.Mode == "Second Class" | retail$Ship.Mode == "Standard Class", ])
+```
+
+- Ketika menggunakan vector untuk kondisi, operator yang digunakan bukan lagi == , melainkan %in%
+
+```{r}
+retail[retail$Ship.Mode %in% c("Second Class","Standard Class") ,]
+```
+
+**Summary Subsetting**
+
+- Untuk subset data kita dapat menggunakan code [ {baris} , {kolom} ]
+- Untuk subset berdasarkan suatu kondisi kita membutuhkan beberapa operator logikal yaitu:
+  * `>` lebih dari
+  * `<` kurang dari
+  * `>=` lebih dari sama dengan
+  * `<=` kurang dari sama dengan
+  * `==` mengecek kesamaan 2 nilai
+  * `!=` tidak sama dengan
+- Untuk menghubungkan 2 kondisi, menggunakan operator:
+  * `&` dan -> 2 kondisi atau lebih harus terpenuhi
+  * `|` atau -> salah satu kondisi saja yang harus terpenuhi
+  * `%in%` include -> digunakan ketika membandingkan dengan vector
+
+### Sampling Data
+
+Sampling data digunakan untuk mengambil beberapa baris secara random dari data. Biasanya dipakai ketika machine learning. Untuk sampling data gunakan fungsi `sample()` dan random number generator `set.seed()`.
+
+```{r}
+# contoh sederhana menggunakan vector
+# tanpa set.seed() sampling akan berubah tiap kali running
+Daerah <- c("Bandung", "Jakarta", "Yogyakarta", "Medan")
+sample(Daerah, 3)
+```
+
+```{r}
+# `set.seed()` mengunci random number generatornya, sehingga cara sampling tidak berubah tiap kali running.
+
+set.seed(100) # dijalankan bersaman sample. angkanya bebas, max 10 digit.
+sample(Daerah, 3)
+```
+
+Untuk sampling dari data.frame, harus dibuat objek berisi index baris yang akan diambil. Index baris dibuat secara random, kemudian diambil baris sesuai index yang sudah dibuat.
+
+Contoh: Sample 60% observasi dari data retail!
+
+```{r}
+# buat index baris secara random
+set.seed(100)
+index <- sample(nrow(retail), # jumlah baris data
+                nrow(retail)*0.6) # jumlah baris yang ingin diambil: 60%
+
+head(index) # menampilkan index random yang akan disampling
+```
+
+```{r}
+retail[index,]
+```
+
+
+## Data Aggregation 
+
+Ketika melakukan analisis data selain subsetting hal lain yang sering dilakukan adalah aggregasi data. 
+
+### `table()`
+
+`table()`: menampilkan **frekuensi** atau **baris** tiap **kategori** pada kolom tertentu
+
+1. ❓Hitung frekuensi dari setiap Segment pada data.
+
+```{r}
+table(retail$Segment)
+```
+
+- Mnghitung frekuensi dari setiap segment di setiap ship.mode
+
+```{r}
+table(retail$Segment, retail$Ship.Mode)
+```
+
+
+### `prop.table()`
+
+Untuk mengetahui **proporsi/persentase** dari tiap kategori.
+
+`prop.table(table(...))`
+
+❓Tampilkan proporsi transaksi untuk masing-masing Segment pelanggan!
+
+```{r}
+prop.table(table(retail$Segment))
+```
+
+### Xtabs
+
+`xtabs()` menampilkan **jumlah (sum) suatu variabel numerik** untuk tiap variabel factor/category.
+
+`xtabs(formula = ..., data =...)`
+
+Ket:
+
+* formula = numerik ~ factor1 + factor2 + factor3
+* data = data yang digunakan
+
+Contoh:
+
+❓Berapa total Profit yang dihasilkan untuk tiap Category Produk?
+
+```{r}
+xtabs(formula = Profit ~ Category, data = retail)
+```
+
+❓Berapa total Sales yang dihasilkan untuk tiap pasangan Segment & Category?
+
+```{r}
+# your code
+xtabs(formula = Profit ~ Category + Segment, data = retail)
+```
+ 
+
+### Aggregate 
+
+Untuk aggregasi data lebih fleksibel (dari segi fungsi yang digunakan), kita dapat menggunakan fungsi `aggregate()`. `aggregate()` digunakan untuk menghitung nilai statistik tertentu (jumlah, rata2, dll) berdasarkan kategori tertentu dalam data.
+
+`aggreagete(formula=..., data=..., FUN=...)`
+
+Ket:
+
+* formula = (yg ingin dihitung) ~ (kategori1) + (kategori2) + (dst)
+* data = data yang ingin digunakan
+* fungsi = nilai statistik tertentu:
+    + sum   = jumlah
+    + min   = nilai min
+    + max   = nilai max
+    + mean  = rata rata
+    + median = nilai tengah
+    + length = menghitung frekuensi
+
+❓Contoh: Berapa rata-rata Sales untuk setiap Segment dan Category?
+mean
+
+```{r}
+aggregate(Sales ~ Segment + Category, 
+          data = retail, 
+          FUN = mean)
+```
+
+### 📝 Summary Tables
+
+- `table()`: tabel frekuensi
+- `prop.table()`: tabel proporsi/persentase
+- `xtabs()`: tabel aggregasi dengan fungsi sum
+- `aggregate()` tabel aggregasi dengan fungsi yang lebih fleksibel, outputnya berupa data.frame
+
+
+### 🏄 Dive Deeper: Sampai dengan pukul 15.28WIB
+
+1. Berapa rata-rata profit yang dihasilkan dari tiap Segmen pelanggan?
+
+```{r}
+aggregate(formula = Profit ~ Segment, 
+          data = retail, 
+          FUN = mean)
+```
+
+2. Berapa jumlah Quantity yang terjual untuk masing-masing Category?
+
+```{r}
+aggregate(formula = Quantity ~ Category, data = retail, FUN = sum)
+```
+
+3. Pasangan Category-Sub.Category yang yang menghasilkan rata-rata profit tertinggi adalah?
+
+```{r}
+data_agg1 <- aggregate(formula = Profit ~ Category + Sub.Category,
+          data = retail,
+          FUN = mean)
+```
+
+- untuk mengurutkan data, menggunakan fungsi order
+
+```{r}
+data_agg1[order(data_agg1$Profit, decreasing = T),]
+```
+
+
+4. Buat 3 pertanyaan bisnis dari data retail yang dapat dijawab dengan beberapa metode yang sudah kita pelajari diatas
+
+1. Penjualan (Sales) maksimal di bulan apa pada 1 tahun (order date) terakhir?
+
+- Buat kolom yang merupakan kolom bulan dan tahun
+- Subset hanya untuk tahun yang paling tinggi
+- Diurutkan berdasakan Sales
+- Dicari bulan apa yang paling tinggi Salesnya
+
+2. Berapa quantity item yang menghasilkan diskon terbesar?
+
+- Aggregate dari nilai max diskon yang paling besar
+
+1. Bagaimana trend peningkatan sales per kuartal untuk setiap category dalam tahun 2017?
+
+- subset untuk tahun 2017
+- di extract per kuartal
+- diurutkan per kuartal
+- dilihat kenaikannya
+
+2. Category dan segment apasaja yang masih membukukan kerugian di tahun 2015-2017?
+
+- subset tahun 2015 - 2017
+- subset untuk category dan segment yang profit < 0
+
+
+
+ 
